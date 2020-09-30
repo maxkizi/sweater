@@ -19,14 +19,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/registration").permitAll()
+                    //указываем адреса на которые можно переходить без авторизации
+                    .antMatchers("/", "/registration", "/test").permitAll()
+                    //для всех остальных запросов нужна регистрация
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .permitAll()
                 .and()
-                    .logout()
+                    .logout().logoutSuccessUrl("/")
                     .permitAll();
     }
 
